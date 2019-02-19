@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Post comments</title>
+
+    <style>
+        .body {
+            font-size: 100%;
+            padding: 0;
+            margin: 0;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        h1 {
+            width: 100%;
+            padding: 5px;
+            margin: 10px 0 20px 0;
+            font-weight: bold;
+        }
+
+        .title {
+            max-width: 600px;
+            padding: 10px 10px 15px 10px;
+            margin-bottom: 10px;
+            background-color: #e8edf5;
+        }
+
+        h2 {
+            margin: 5px 0 10px 0;
+            font-weight: bold;
+        }
+
+        .title a {
+            padding: 10px 0;
+            font-weight: bold;
+        }
+
+        .title a {
+            display: block;
+            color: #2772be;
+        }
+
+        .p-id, .p-title {
+            font-weight: bold;
+        }
+
+        .p-id {
+            padding: 8px 8px 0 6px;
+        }
+
+        .p-title, .p-body {
+            padding: 6px;
+            max-width: 600px;
+
+        }
+
+        .p-mail {
+            padding: 0 0 30px 5px;
+        }
+
+    </style>
+</head>
+<body>
+
+<h1>Coments for</h1>
+<div id="post-title" class="title"></div>
+<div id="post-comments" class="comments"></div>
+
+<script>
+
+    // two requests api calls, one to get post payload, and one to get post comments
+    // the post id is passed in the query string
+
+    const baseUrl = "https://jsonplaceholder.typicode.com/posts/";
+    const urlParams = new URLSearchParams(window.location.search);
+    const postId = urlParams.get('post_id');
+
+    const postUrl = baseUrl + postId;
+    const commentsUrl = postUrl + "/comments";
+
+    // get post
+    const xmlhttpPost = new XMLHttpRequest();
+
+    // xmlhttp request to api
+    xmlhttpPost.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var post = JSON.parse(this.responseText);
+            showPost(post);
+        }
+    };
+
+    // first request to get post
+    xmlhttpPost.open("GET", postUrl, true);
+    xmlhttpPost.send();
+
+    // get post comments
+    const xmlhttpComments = new XMLHttpRequest();
+
+    // xmlhttp request to api
+    xmlhttpComments.onreadystatechange = function () {
+        if (this.readyState == 4 && this.status == 200) {
+            var comments = JSON.parse(this.responseText);
+            showPostComments(comments);
+        }
+    };
+
+    // second request to get post comments
+    xmlhttpComments.open("GET", commentsUrl, true);
+    xmlhttpComments.send();
+
+    // generate html
+    function showPost(post) {
+        var out = '';
+        out += '<div class="p-id">' + 'Post ID: ' + postId + '</div>';
+        out += '<div class="p-title">' + 'Title: ' + post.title + '</div>';
+        out += '<div class="p-body">' + 'Body: ' + post.body + '</div><br>';
+        out += '<a href="posts.html"> Back To  ALL POSTS</a>';
+        document.getElementById("post-title").innerHTML = out;
+    }
+
+    // generate html
+    function showPostComments(arr) {
+        var out = "";
+        var i;
+
+        for (i = 0; i < arr.length; i++) {
+            out += '<div class="p-id">' + 'Comment ID: ' + arr[i].id + '</div>' +
+                    '<div class="p-title">' + arr[i].name + '</div>' +
+                    '<div class="p-body">' + arr[i].body + '</div>' +
+                    '<div class="p-mail">' + arr[i].email + '</div>';
+        }
+
+        document.getElementById("post-comments").innerHTML = out;
+    }
+
+</script>
+
+</body>
+</html>

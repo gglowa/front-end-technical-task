@@ -5,6 +5,7 @@
     <title>Make This Responsive</title>
 
     <style type="text/css">
+
       * {
         box-sizing: border-box;
       }
@@ -14,7 +15,9 @@
       }
 
       .wrapper {
-        width: 800px;
+        /* added to*/
+        width: 100%;
+        max-width: 800px;
         margin: 20px auto;
       }
 
@@ -23,16 +26,35 @@
         margin: 0 0 25px 0;
       }
 
+      /* added to*/
       .story {
         float: left;
-        width: 250px;
-        margin-right: 25px;
         position: relative;
         font-size: 80%;
+
+        margin-right: 3.1%;
+        margin-bottom: 3.1%;
+        width: 31.25%;
+        max-width: 250px;
       }
 
+      /* added */
+      @media (max-width: 420px) {
+        .story {
+          width: 48%;
+          margin-right:0;
+          margin-bottom: 3.8%;
+        }
+        .story:nth-child(even) {
+          margin-right: 3.8%;
+        }
+      }
+
+      /* added to */
       .story img {
         display: block;
+        width: 100%;
+        height: auto;
       }
 
       .story__intro {
@@ -53,11 +75,14 @@
         margin: 0;
       }
 
+      /* added to*/
       .story--main {
         position: relative;
         margin: 0 0 25px 0;
         width: 100%;
+        max-width: 100%;
       }
+
       .story--main .story__intro h2 {
         font-size: 2.5em;
       }
@@ -65,6 +90,12 @@
       .story--last {
         margin-right: 0;
       }
+
+      /*
+        an alternative would be hero image cropping, but still allowing the text to wrap
+        and a higher break point for 'Less Important Story'
+      */
+
     </style>
   </head>
 
@@ -86,26 +117,32 @@
 
         <article class="story">
           <img src="http://placehold.it/250x350" alt="Placeholder Image" />
+
           <div class="story__intro">
             <h2>Less Important Story</h2>
             <p>This story has less visual weight.</p>
           </div>
+
         </article>
 
         <article class="story">
           <img src="http://placehold.it/250x350" alt="Placeholder Image" />
+
           <div class="story__intro">
             <h2>Less Important Story</h2>
             <p>This story has less visual weight.</p>
           </div>
+
         </article>
 
         <article class="story story--last">
           <img src="http://placehold.it/250x350" alt="Placeholder Image" />
+
           <div class="story__intro">
             <h2>Less Important Story</h2>
             <p>This story has less visual weight.</p>
           </div>
+
         </article>
       </section>
     </div>

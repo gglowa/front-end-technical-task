@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Posts</title>
+
+    <style>
+        .body {
+            font-size: 100%;
+            padding: 0;
+            margin:0;
+        }
+        * {
+            box-sizing: border-box;
+        }
+        h1  {
+            width: 100%;
+            padding: 5px;
+            margin:10px 0 20px 0;
+            font-weight: bold;
+        }
+        .post {
+            max-width: 600px;
+            padding: 10px 10px 15px 10px;
+            margin-bottom: 10px;
+            background-color: #e8edf5;
+        }
+        h2 {
+            margin:5px 0 10px 0;
+            font-weight: bold;
+        }
+        .post a {
+            padding: 10px 0;
+            font-weight: bold;
+        }
+        .post a {
+            display: block;
+            color: #2772be;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="id01"></div>
+
+<script>
+
+    // request to get all posts
+    var xmlhttp = new XMLHttpRequest();
+    // api url
+    var url = "https://jsonplaceholder.typicode.com/posts";
+
+    // xmlhttp request to api
+    xmlhttp.onreadystatechange = function () {
+        // if response received (4) and status ok (200)
+        if (this.readyState == 4 && this.status == 200) {
+            // response received show / populate posts
+            var posts = JSON.parse(this.responseText);
+            showAllPosts(posts);
+        }
+    };
+
+    // make request
+    xmlhttp.open("GET", url, true);
+    xmlhttp.send();
+
+    function showAllPosts(posts) {
+        var out = "";
+        var i;
+        out += "<h1 class='header'>  ALL POSTS @ https://jsonplaceholder.typicode.com/posts </h1> ";
+
+        for (i = 0; i < posts.length; i++) {
+            // loop through all posts
+            out += '<div class="post">' + '<h2 class="title">' + 'POST ' + posts[i].id + '</h2>' + posts[i].title + '</a><br>'
+                    + posts[i].body + '<br>' +
+                    '<a href="post-comments.html?post_id=' + posts[i].id + '">Post ' + posts[i].id + ' comments</a>' +
+                    '</div>';
+        }
+
+        document.getElementById("id01").innerHTML = out;
+    }
+
+</script>
+
+</body>
+</html>
